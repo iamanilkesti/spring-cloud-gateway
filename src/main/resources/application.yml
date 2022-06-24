@@ -1,0 +1,25 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: STUDENT-SERVICE
+          uri: lb://STUDENT-SERVICE
+          predicates:
+            - Path=/students/**
+        - id: STANDARD-SERVICE
+          uri: lb://STANDARD-SERVICE
+          predicates:
+            - Path=/standards/**
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+  service-url: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
